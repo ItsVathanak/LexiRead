@@ -1,0 +1,224 @@
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('../fonts/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lexend';
+  src: url('../fonts/Lexend-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #f4f7fb;
+  --card: #ffffff;
+  --ink: #1c2b3a;
+  --muted: #5b6b7b;
+  --accent: #2f6fed;
+  --accent-soft: #dbe7ff;
+  --danger: #c0392b;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(16, 36, 60, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 340px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  background: var(--accent);
+  color: #fff;
+}
+
+.logo {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 26px;
+  transition: background 0.15s ease;
+}
+
+.slider::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+}
+
+.switch input:checked + .slider {
+  background: #fff;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(20px);
+  background: var(--accent);
+}
+
+.section {
+  background: var(--card);
+  margin: 10px 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.section-title {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.value {
+  color: var(--accent);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.font-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.font-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+  padding: 12px;
+  border: 2px solid #d6e0ee;
+  border-radius: var(--radius);
+  background: #fafcff;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.font-card:hover {
+  border-color: var(--accent);
+}
+
+.font-card[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.font-preview {
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preview-opendyslexic {
+  font-family: 'OpenDyslexic', sans-serif;
+}
+
+.preview-lexend {
+  font-family: 'Lexend', sans-serif;
+}
+
+.font-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.slider-input {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.site-toggle {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #d6e0ee;
+  border-radius: var(--radius);
+  background: #fafcff;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.12s ease, color 0.12s ease;
+}
+
+.site-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.site-toggle[aria-pressed='true'] {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.footer {
+  padding: 12px 18px 16px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.footer[data-state='on'] {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.footer[data-state='off'] {
+  color: var(--danger);
+  font-weight: 600;
+}

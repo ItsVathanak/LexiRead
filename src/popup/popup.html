@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>LexiRead</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="header">
+    <h1 class="logo">LexiRead</h1>
+    <label class="switch" title="Toggle LexiRead">
+      <input type="checkbox" id="enabled" checked>
+      <span class="slider"></span>
+    </label>
+  </header>
+
+  <section class="section">
+    <h2 class="section-title">Font</h2>
+    <div class="font-options">
+      <button type="button" class="font-card" data-font="opendyslexic" aria-pressed="true">
+        <span class="font-preview preview-opendyslexic">The quick brown fox</span>
+        <span class="font-name">OpenDyslexic</span>
+      </button>
+      <button type="button" class="font-card" data-font="lexend" aria-pressed="false">
+        <span class="font-preview preview-lexend">The quick brown fox</span>
+        <span class="font-name">Lexend</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Text size <span class="value" id="fontSizeValue">100%</span></h2>
+    <input type="range" class="slider-input" id="fontSize" min="80" max="140" step="5" value="100">
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Line height <span class="value" id="lineHeightValue">1.6</span></h2>
+    <input type="range" class="slider-input" id="lineHeight" min="1.2" max="2.2" step="0.1" value="1.6">
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Letter spacing <span class="value" id="letterSpacingValue">0px</span></h2>
+    <input type="range" class="slider-input" id="letterSpacing" min="0" max="3" step="0.5" value="0">
+  </section>
+
+  <section class="section">
+    <button type="button" class="site-toggle" id="siteToggle">Disable on this site</button>
+  </section>
+
+  <footer class="footer" id="status">LexiRead is on</footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
