@@ -59,6 +59,29 @@ body {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.02em;
+  font-family: 'Lexend', sans-serif;
+}
+
+.state-toggle {
+  min-width: 72px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.state-toggle[aria-pressed='true'] {
+  background: var(--green3);
+  color: #000;
+}
+
+.state-toggle[aria-pressed='false'] {
+  background: #000;
+  color: var(--green3);
 }
 
 .switch {

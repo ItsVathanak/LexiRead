@@ -11,6 +11,44 @@ const DEFAULT_SETTINGS = {
 
 const $ = (id) => document.getElementById(id);
 
+// Sound effects
+const SOUND_FILES = {
+  toggleOn: 'assets/toggle-on.mp3',
+  toggleOff: 'assets/toggle-off.mp3',
+  fontSelect: 'assets/font-select.mp3',
+  slider: 'assets/slider.mp3',
+  highlight: 'assets/highlight.mp3',
+  disable: 'assets/disable.mp3'
+};
+
+// Sound effects
+const audioCache = {};
+
+// Sound effects
+function playSound(name) {
+  const src = SOUND_FILES[name];
+  if (!src) return;
+  let audio = audioCache[name];
+  if (!audio) {
+    audio = new Audio(chrome.runtime.getURL(src));
+    audio.volume = 0.15;
+    audioCache[name] = audio;
+  }
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
+
+// Sound effects
+let lastSliderSound = 0;
+
+// Sound effects
+function playSliderSound() {
+  const now = Date.now();
+  if (now - lastSliderSound < 120) return;
+  lastSliderSound = now;
+  playSound('slider');
+}
+
 let settings = Object.assign({}, DEFAULT_SETTINGS);
 let currentHost = '';
 
@@ -85,7 +123,9 @@ function updateLabels() {
 }
 
 function render() {
-  $('enabled').checked = settings.enabled;
+  const stateToggle = $('enabledToggle');
+  stateToggle.setAttribute('aria-pressed', String(settings.enabled));
+  stateToggle.textContent = settings.enabled ? 'On' : 'Off';
 
   document.querySelectorAll('.font-card').forEach((card) => {
     const pressed = card.dataset.font === settings.font;
@@ -115,14 +155,16 @@ function render() {
   }
 }
 
-$('enabled').addEventListener('change', (e) => {
-  settings.enabled = e.target.checked;
+$('enabledToggle').addEventListener('click', () => {
+  settings.enabled = !settings.enabled;
+  playSound(settings.enabled ? 'toggleOn' : 'toggleOff');
   save();
 });
 
 document.querySelectorAll('.font-card').forEach((card) => {
   card.addEventListener('click', () => {
     settings.font = card.dataset.font;
+    playSound('fontSelect');
     save();
   });
 });
@@ -131,6 +173,7 @@ document.querySelectorAll('.font-card').forEach((card) => {
 $('fontSize').addEventListener('input', (e) => {
   settings.fontSize = Number(e.target.value) / 100;
   updateLabels();
+  playSliderSound();
   debouncedSave();
 });
 
@@ -138,6 +181,7 @@ $('fontSize').addEventListener('input', (e) => {
 $('lineHeight').addEventListener('input', (e) => {
   settings.lineHeight = Number(e.target.value);
   updateLabels();
+  playSliderSound();
   debouncedSave();
 });
 
@@ -145,11 +189,13 @@ $('lineHeight').addEventListener('input', (e) => {
 $('letterSpacing').addEventListener('input', (e) => {
   settings.letterSpacing = Number(e.target.value);
   updateLabels();
+  playSliderSound();
   debouncedSave();
 });
 
 $('sentenceHighlight').addEventListener('change', (e) => {
   settings.sentenceHighlight = e.target.checked;
+  playSound('highlight');
   save();
 });
 
@@ -169,6 +215,7 @@ $('siteToggle').addEventListener('click', () => {
     list.push(currentHost);
   }
   settings.disabledHostnames = list;
+  playSound('disable');
   save();
 });
 
