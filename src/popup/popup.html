@@ -18,12 +18,10 @@
     <h2 class="section-title">Font</h2>
     <div class="font-options">
       <button type="button" class="font-card" data-font="opendyslexic" aria-pressed="true">
-        <span class="font-preview preview-opendyslexic">The quick brown fox</span>
-        <span class="font-name">OpenDyslexic</span>
+        <span class="preview-opendyslexic">OpenDyslexic</span>
       </button>
       <button type="button" class="font-card" data-font="lexend" aria-pressed="false">
-        <span class="font-preview preview-lexend">The quick brown fox</span>
-        <span class="font-name">Lexend</span>
+        <span class="preview-lexend">Lexend</span>
       </button>
     </div>
   </section>
@@ -41,6 +39,21 @@
   <section class="section">
     <h2 class="section-title">Letter spacing <span class="value" id="letterSpacingValue">0px</span></h2>
     <input type="range" class="slider-input" id="letterSpacing" min="0" max="3" step="0.5" value="0">
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Sentence highlight</h2>
+    <div class="highlight-toggle-row">
+      <label class="switch" title="Highlight sentence on hover">
+        <input type="checkbox" id="sentenceHighlight">
+        <span class="slider"></span>
+      </label>
+      <span class="helper">Highlight the sentence under your cursor</span>
+    </div>
+    <div class="highlight-color-row">
+      <label class="color-label" for="highlightColor">Highlight color</label>
+      <input type="color" id="highlightColor" value="#A2CB8B">
+    </div>
   </section>
 
   <section class="section">

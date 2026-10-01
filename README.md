@@ -7,6 +7,7 @@ A Chrome extension that makes webpages easier to read for people with dyslexia b
 - **Core**: re-renders page text in a dyslexia-friendly font (CSS-only swap, no page structure changes)
 - Two bundled fonts: **OpenDyslexic** (Regular/Bold/Italic/BoldItalic) and **Lexend** (Regular/Bold)
 - Adjustable **text size**, **line height**, and **letter spacing**
+- **Sentence highlight**: hover over a sentence to highlight it in a color of your choice (default `#A2CB8B`); works across sites and on dynamically loaded content
 - Master on/off toggle and **per-site disable**
 - Settings persist across sessions via `chrome.storage.sync`
 
@@ -38,6 +39,7 @@ LexiRead/
 - **Toggle**: master on/off switch in the popup header
 - **Font**: pick OpenDyslexic or Lexend (previews shown in each font)
 - **Text size / line height / letter spacing**: sliders, applied live
+- **Sentence highlight**: toggle on, pick a highlight color, then hover over sentences to highlight them
 - **Per-site**: "Disable on this site" adds the current host to an exclusion list
 
 ## How the font swap works
@@ -51,5 +53,5 @@ The content script (`run_at: document_start`) injects a `<style>` element with `
 
 ## Roadmap
 
-- Sentence hover-highlighting (experimental, opt-in)
+- Sound effects for buttons and sliders
 - Word/line focus helper (reading ruler)

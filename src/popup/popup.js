@@ -4,13 +4,27 @@ const DEFAULT_SETTINGS = {
   fontSize: 1.0,
   lineHeight: 1.6,
   letterSpacing: 0,
-  disabledHostnames: []
+  disabledHostnames: [],
+  sentenceHighlight: false,
+  highlightColor: '#A2CB8B'
 };
 
 const $ = (id) => document.getElementById(id);
 
 let settings = Object.assign({}, DEFAULT_SETTINGS);
 let currentHost = '';
+
+// Debounce
+function debounce(fn, ms) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), ms);
+  };
+}
+
+// Debounce
+const debouncedSave = debounce(save, 500);
 
 function normalizeHost(host) {
   return (host || '').replace(/^www\./, '').toLowerCase();
@@ -59,14 +73,7 @@ function isSiteDisabled() {
   return currentHost && (settings.disabledHostnames || []).indexOf(currentHost) !== -1;
 }
 
-function render() {
-  $('enabled').checked = settings.enabled;
-
-  document.querySelectorAll('.font-card').forEach((card) => {
-    const pressed = card.dataset.font === settings.font;
-    card.setAttribute('aria-pressed', String(pressed));
-  });
-
+function updateLabels() {
   $('fontSize').value = Math.round((Number(settings.fontSize) || 1.0) * 100);
   $('fontSizeValue').textContent = $('fontSize').value + '%';
 
@@ -75,6 +82,22 @@ function render() {
 
   $('letterSpacing').value = Number(settings.letterSpacing) || 0;
   $('letterSpacingValue').textContent = $('letterSpacing').value + 'px';
+}
+
+function render() {
+  $('enabled').checked = settings.enabled;
+
+  document.querySelectorAll('.font-card').forEach((card) => {
+    const pressed = card.dataset.font === settings.font;
+    card.setAttribute('aria-pressed', String(pressed));
+  });
+
+  updateLabels();
+
+  const colorInput = $('highlightColor');
+  colorInput.value = settings.highlightColor || '#A2CB8B';
+  colorInput.disabled = !settings.sentenceHighlight;
+  $('sentenceHighlight').checked = !!settings.sentenceHighlight;
 
   const siteDisabled = isSiteDisabled();
   const toggle = $('siteToggle');
@@ -104,19 +127,36 @@ document.querySelectorAll('.font-card').forEach((card) => {
   });
 });
 
+// Debounce
 $('fontSize').addEventListener('input', (e) => {
   settings.fontSize = Number(e.target.value) / 100;
-  save();
+  updateLabels();
+  debouncedSave();
 });
 
+// Debounce
 $('lineHeight').addEventListener('input', (e) => {
   settings.lineHeight = Number(e.target.value);
+  updateLabels();
+  debouncedSave();
+});
+
+// Debounce
+$('letterSpacing').addEventListener('input', (e) => {
+  settings.letterSpacing = Number(e.target.value);
+  updateLabels();
+  debouncedSave();
+});
+
+$('sentenceHighlight').addEventListener('change', (e) => {
+  settings.sentenceHighlight = e.target.checked;
   save();
 });
 
-$('letterSpacing').addEventListener('input', (e) => {
-  settings.letterSpacing = Number(e.target.value);
-  save();
+// Debounce
+$('highlightColor').addEventListener('input', (e) => {
+  settings.highlightColor = e.target.value;
+  debouncedSave();
 });
 
 $('siteToggle').addEventListener('click', () => {
